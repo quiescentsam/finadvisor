@@ -1,0 +1,23 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.121.1",
+    "rag",
+    "shared",
+    "uvicorn>=0.38.0",
+]
+
+[project.scripts]
+backend = "backend:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+rag = { path = "../rag" }
+shared = { path = "../shared", editable = true }

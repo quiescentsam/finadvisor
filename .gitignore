@@ -15,3 +15,10 @@ ENV/
 pip-wheel-metadata/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints  
+
+
+**/.venv
+__pycache__/
+*.pyc
+*.log
+uv.lock
