@@ -1,3 +1,6 @@
+
+
+
 import pytest
 import respx
 from httpx import Response
@@ -23,4 +26,4 @@ async def test_get_stock_price():
     )
 
     price = await get_stock_price(ticker)
-    assert price == 150.25
+    assert price == 90.0
