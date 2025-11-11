@@ -3,6 +3,11 @@ from shared.logging_utils import get_logger
 from rag.pipeline import run_rag
 from backend.config.settings import settings
 
+from backend.app.routes import stocks
+# from backend.app.routes import portfolio
+# from backend.app.routes import users
+from backend.app.routes import ai
+
 logger = get_logger(__name__)
 app = FastAPI()
 
@@ -17,3 +22,10 @@ def rag_endpoint(q: str):
     response = run_rag(q)
     logger.info("RAG endpoint hit")
     return {"response": response}
+
+
+# Include routers
+app.include_router(stocks.router)
+# app.include_router(portfolio.router)
+# app.include_router(users.router)
+app.include_router(ai.router)
