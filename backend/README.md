@@ -61,3 +61,30 @@ backend/
 Cd backend 
 
  uv run uvicorn backend.app.main:app --reload
+
+
+
+# Swagger Docs
+
+http://127.0.0.1:8000/docs
+
+
+ # Redoc
+
+ http://127.0.0.1:8000/redoc
+
+
+ # Best Practices for API
+
+
+* Async everything – FastAPI + async DB + async API calls for scalability.
+
+* Environment config – use .env + Pydantic Settings.
+
+* Logging & error handling – centralize in shared/logging_utils.py.
+
+* Testing – create tests/ for each route and service.
+
+* Security – OAuth2 / JWT for private endpoints.
+
+* Versioning – consider /v1/ai/recommendation for future-proof APIs.
