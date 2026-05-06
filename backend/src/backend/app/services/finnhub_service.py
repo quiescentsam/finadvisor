@@ -7,16 +7,12 @@ from typing import Any
 
 import httpx
 
-from backend.config.settings import settings
-
 FINNHUB_BASE = "https://finnhub.io/api/v1"
 
 
 class FinnhubService:
-    def __init__(self, api_key: str | None = None) -> None:
-        self.api_key = api_key or settings.FINNHUB_API_KEY
-        if not self.api_key:
-            raise ValueError("Missing FINNHUB_API_KEY environment variable")
+    def __init__(self, api_key: str) -> None:
+        self.api_key = api_key
 
     async def get_stock_quote(self, symbol: str) -> dict[str, Any]:
         sym = symbol.upper().strip()
@@ -114,4 +110,12 @@ def _f(v: Any) -> float | None:
 
 
 def get_finnhub_service() -> FinnhubService:
-    return FinnhubService()
+    from fastapi import HTTPException
+
+    from backend.config.settings import settings
+
+    try:
+        key = settings.require_finnhub_api_key()
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e)) from e
+    return FinnhubService(api_key=key)

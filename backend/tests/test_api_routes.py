@@ -9,6 +9,7 @@ from starlette.testclient import TestClient
 
 from backend.app.main import app
 from backend.app.services.finnhub_service import FinnhubService, get_finnhub_service
+from backend.config.settings import settings
 
 
 def _quote_service_dict() -> dict:
@@ -68,6 +69,18 @@ def test_get_stock_quote_endpoint_calls_finnhub_and_returns_body(stocks_client):
     assert body["current_price"] == 190.5
     assert body["open"] == 191.0
     finnhub.get_stock_quote.assert_awaited_once_with("aapl")
+
+
+def test_stock_routes_503_when_finnhub_not_configured():
+    prev = settings.FINNHUB_API_KEY
+    settings.FINNHUB_API_KEY = None
+    try:
+        with TestClient(app) as client:
+            r = client.get("/api/v1/stocks/aapl/quote")
+        assert r.status_code == 503
+        assert "FINNHUB_API_KEY" in r.json()["detail"]
+    finally:
+        settings.FINNHUB_API_KEY = prev
 
 
 def test_get_stock_quote_value_error_maps_to_404(stocks_client):

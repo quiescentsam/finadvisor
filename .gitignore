@@ -26,3 +26,7 @@ uv.lock
 # Node (Next.js frontend)
 frontend/node_modules/
 frontend/.next/
+
+#cursor
+.cursor/
+.cursor/mcp.json
