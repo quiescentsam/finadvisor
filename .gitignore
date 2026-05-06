@@ -22,3 +22,7 @@ __pycache__/
 *.pyc
 *.log
 uv.lock
+
+# Node (Next.js frontend)
+frontend/node_modules/
+frontend/.next/

@@ -4,5 +4,8 @@ run-api:
 run-rag:
 	cd rag && uv run python -m rag.pipeline
 
+install-ui:
+	cd frontend && npm install
+
 run-ui:
-	cd frontend && uv run streamlit run frontend/streamlit_app.py
+	cd frontend && npm run dev

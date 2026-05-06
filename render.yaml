@@ -1,0 +1,16 @@
+# Blueprint: https://render.com/docs/blueprint-spec
+# Deploy from the repository root so local path deps (shared, rag) resolve.
+services:
+  - type: web
+    name: finadvisor-api
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: pip install --upgrade pip setuptools wheel && pip install -e ./shared -e ./rag -e ./backend
+    startCommand: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips='*'
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.4"
+      - key: ENVIRONMENT
+        value: production
